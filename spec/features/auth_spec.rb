@@ -16,4 +16,17 @@ feature 'Auth' do
     expect(page).to have_content("user@example.com")
   end
 
+  scenario 'User email cannot be blank' do
+    visit root_path
+
+    within(".auth") { click_on "Register" }
+
+    fill_in "Name", with: "Me"
+    fill_in "Password", with: "test"
+    fill_in "Confirm", with: "test"
+    within (".registration-form") { click_on "Register" }
+
+    expect(page).to have_content("Email can't be blank")
+  end
+
 end
